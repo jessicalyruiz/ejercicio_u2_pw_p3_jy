@@ -1,15 +1,15 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Jessi App"/>
+  <!--<img alt="Vue logo" src="./assets/logo.png">-->
+  <covid/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import covid from './components/covidCases.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    covid
   }
 }
 </script>
