@@ -8,7 +8,7 @@
 
 <div v-if="mostarcasos" class="resultados">
     <h3>Resultados</h3>
-    <label for="">Casos Positivos</label>
+    <label for="">Casos Positivos:</label>
     <input type="text" :value="positive">
     <label for="">Total de resultado de Pruebas</label>
     <input type="text" :value="totalTestResults">
