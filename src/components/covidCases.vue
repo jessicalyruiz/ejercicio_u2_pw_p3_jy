@@ -2,7 +2,10 @@
   <h1>Covid Cases USA</h1>
   <h3>Codigo de Estados</h3>
 
-  <h4 v-for="item in estados">{{ item }}</h4>
+  <!--<h4 v-show="mostarInicio">{{ this.construirTodosEstados() }}</h4>-->
+  <ul>
+    <li v-for="item in estados"> {{ item }}</li>
+  </ul>
 
 <input  v-model="consultar" type="text" placeholder="Ingrese codigo estado">
 
@@ -27,6 +30,7 @@
 export default {
     data() {
     return {
+      mostarInicio:false,
       estados:null,
       estado:null,
       mostarcasos: true,
@@ -36,20 +40,20 @@ export default {
       death:null,
       totalTestsViral:null,
       deathIncrease:null,
+      consultar:null,
     };
   },
   watch:{
-    consultar(value){
-            console.log(value);
-            if(!value.includes("?"))return;
+    consultar(evento, old){
+            console.log(evento)
+            console.log(old)
               console.log('vamos conultar')  
-        this.mostarResultados()
+             
+        
         }
     },
   methods: {
-    consultar(){
-
-    },
+    
     async consumirAPI() {
       const datat = await fetch("https://api.covidtracking.com/v1/states/current.json").then(
         (r) => r.json()
@@ -64,11 +68,13 @@ export default {
     },
     async construirTodosEstados() {
         const vectoestados = [];
+        const dataAPI=await this.consumirAPI();
         for (let i = 0; i < 54; i++) {
-            const { state } =await this.consumirAPI();
-            vectoestados[i]=state;
+          
+            vectoestados.unshift(dataAPI[i].state);
         }
         this.estados=vectoestados;
+        console.log(vectoestados)
       return vectoestados;
     },
     async mostarResultados(state){
@@ -85,7 +91,36 @@ export default {
     },
 
 
+    },
+    mounted(){
+      console.log("se monto");
+      this.construirTodosEstados();
+    },
+    beforeCreate(){
+      console.log("se antes de crear");
+    },
+    beforeUpdate(){
+      console.log("se beforeUpdate");
+    },
+    beforeUnmount(){
+      console.log("se beforeUnmount");
+    },
+    renderTracked(){
+      console.log("se renderTracked");
+    },
+    updated(){
+      console.log("se monto");
+    },
+    unmonted(){
+      console.log("se updated");
+    },
+    deactivated(){
+      console.log("se deactivated");
+    },
+    created(){
+      console.log("se created");
     }
+
 }
 </script>
 
