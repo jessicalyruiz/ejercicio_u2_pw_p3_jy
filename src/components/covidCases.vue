@@ -7,7 +7,7 @@
     <li v-for="item in estados"> {{ item }}</li>
   </ul>
 
-<input  v-model="consultar" type="text" placeholder="Ingrese codigo estado">
+<input v-on:keyup.enter="consultar()"  v-model="consultar" type="text" placeholder="Ingrese codigo estado">
 
 <div v-if="mostarcasos" class="resultados">
     <h3>Resultados</h3>
@@ -44,12 +44,17 @@ export default {
     };
   },
   watch:{
-    consultar(evento, old){
+    async consultar(evento, old){
             console.log(evento)
             console.log(old)
               console.log('vamos conultar')  
-             
-        
+             const {positive,totalTestResults,hospitalizedCurrently, death,  totalTestsViral, deathIncrease }= await this.consumirAPIestado(evento)
+             this.positive=positive
+             this.totalTestResults=totalTestResults
+             this.hospitalizedCurrently=hospitalizedCurrently
+             this.death=death
+             this.totalTestsViral=totalTestsViral
+             this.deathIncrease=deathIncrease
         }
     },
   methods: {
@@ -92,10 +97,11 @@ export default {
 
 
     },
+    
     mounted(){
       console.log("se monto");
       this.construirTodosEstados();
-    },
+    },/*
     beforeCreate(){
       console.log("se antes de crear");
     },
@@ -119,7 +125,7 @@ export default {
     },
     created(){
       console.log("se created");
-    }
+    }*/
 
 }
 </script>
@@ -127,8 +133,25 @@ export default {
 <style>
 .resultados{
     display: grid;
+    margin-left: 35%;
+    margin-right: 35%;
 }
 input{
     margin: 10px;
 }
+
+ul {
+
+  
+  list-style-type: none;
+  width: 160px;
+  margin: 0;
+  padding: 0;
+  background: rgb(172, 206, 250);
+  columns: 3; 
+  margin-left: 45%;
+  
+}
+
+
 </style>
